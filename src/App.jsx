@@ -7,7 +7,7 @@ import Hero from './components/Hero';
 import Projects from './components/Projects';
 import SkillsSection from './components/SkillsSection';
 import ContactFooter from './components/ContactFooter';
-import GravityControls from './components/GravityControls';
+
 
 export default function App() {
   return (
@@ -30,8 +30,7 @@ export default function App() {
           {/* Orbit Footer */}
           <ContactFooter />
 
-          {/* Interactive Gravity HUD Widget */}
-          <GravityControls />
+
         </div>
       </TrackProvider>
     </GravityProvider>
