@@ -25,32 +25,46 @@ export default function Projects() {
     { id: 'data', label: 'Data Analytics & AI' },
   ];
 
-  // Sort and filter projects based on active filter
+  // Sort projects based on active filter so all 4 CV projects stay visible
   const getFilteredProjects = () => {
-    let list = [...PROJECTS_DATA];
+    const list = [...PROJECTS_DATA];
 
     if (activeFilter === 'uiux') {
-      // Prioritize ECOS OF REALITY as in the UI/UX CV
-      list.sort((a, b) => (a.id === 'ecos-of-reality' ? -1 : 1));
-      return list.filter(p => p.tracks.includes('uiux'));
+      // Prioritize ECOS OF REALITY first (as in UI/UX CV)
+      return list.sort((a, b) => {
+        if (a.id === 'ecos-of-reality') return -1;
+        if (b.id === 'ecos-of-reality') return 1;
+        if (a.id === 'wonder-routes') return -1;
+        return 0;
+      });
     }
 
     if (activeFilter === 'swe') {
-      // Prioritize CareVision LK & Artisync
-      list.sort((a, b) => (a.id === 'carevision-lk' ? -1 : 1));
-      return list.filter(p => p.tracks.includes('swe'));
+      // Prioritize CareVision LK and Artisync
+      return list.sort((a, b) => {
+        if (a.id === 'carevision-lk') return -1;
+        if (b.id === 'carevision-lk') return 1;
+        return 0;
+      });
     }
 
     if (activeFilter === 'web') {
-      // Prioritize Artisync & Wonder Routes
-      list.sort((a, b) => (a.id === 'artisync' ? -1 : 1));
-      return list.filter(p => p.tracks.includes('web'));
+      // Prioritize Artisync and Wonder Routes
+      return list.sort((a, b) => {
+        if (a.id === 'artisync') return -1;
+        if (b.id === 'artisync') return 1;
+        if (a.id === 'wonder-routes') return -1;
+        return 0;
+      });
     }
 
     if (activeFilter === 'data') {
-      // Prioritize CareVision LK (edge data analytics)
-      list.sort((a, b) => (a.id === 'carevision-lk' ? -1 : 1));
-      return list.filter(p => p.tracks.includes('data'));
+      // Prioritize CareVision LK (edge surveillance data) and Artisync (database)
+      return list.sort((a, b) => {
+        if (a.id === 'carevision-lk') return -1;
+        if (b.id === 'carevision-lk') return 1;
+        return 0;
+      });
     }
 
     return list;

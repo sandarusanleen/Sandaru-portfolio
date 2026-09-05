@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, ExternalLink, Github, CheckCircle2, Layers, Cpu, Compass } from 'lucide-react';
+import { X, ExternalLink, Github, CheckCircle2, Layers, Cpu, Compass, Palette } from 'lucide-react';
 import { playClick } from '../utils/audio';
 
 export default function ProjectModal({ project, onClose }) {
@@ -125,18 +125,18 @@ export default function ProjectModal({ project, onClose }) {
               rel="noreferrer"
               className="px-5 py-2.5 rounded-xl bg-neon-cyan hover:bg-cyan-300 text-space-950 text-xs font-mono font-bold tracking-wider uppercase flex items-center gap-2 shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all"
             >
-              <span>Launch Live Node</span>
+              <span>{project.figmaUrl ? "Open Figma Prototype" : "Launch Live Demo"}</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
 
             <a
-              href={project.repoUrl}
+              href={project.figmaUrl || project.repoUrl}
               target="_blank"
               rel="noreferrer"
               className="px-4 py-2.5 rounded-xl glass-button text-xs font-mono text-slate-300 hover:text-white flex items-center gap-2 border border-white/10"
             >
-              <Github className="w-4 h-4" />
-              <span>Source Repository</span>
+              {project.figmaUrl ? <Palette className="w-4 h-4 text-neon-pink" /> : <Github className="w-4 h-4" />}
+              <span>{project.figmaUrl ? "Figma Design Workspace" : "Source Repository"}</span>
             </a>
           </div>
 

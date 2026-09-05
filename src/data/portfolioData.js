@@ -14,6 +14,9 @@ export const HERO_DATA = {
   formattedPhone: "+94 77 323 8110",
   address: "Potuvila watta, Unanvitiya, Baddegama, Galle, Sri Lanka",
   location: "Galle / Belihuloya, Sri Lanka",
+  linkedinUrl: "https://www.linkedin.com/in/sandaru-bandarigodage-107b7a26a/",
+  githubUrl: "https://github.com/sandarusanleen",
+  portfolioUrl: "https://sandarusanleen.github.io/portfolio/",
   tagline: "Motivated Information Technology undergraduate with practical experience in full-stack web development, system architecture, and UI asset design. Adept at building practical applications, from surveillance management platforms to modern React web solutions. Seeking an IT internship to apply technical problem-solving and software engineering principles in a collaborative team environment.",
   status: "ACTIVELY SEEKING INTERNSHIP // AVAILABLE 2025/2026",
   coordinates: "SUSL // GALLE, SRI LANKA",
@@ -116,10 +119,10 @@ export const PROJECTS_DATA = [
     metrics: ['Artisan Discovery Platform', 'Responsive React & Node.js', 'Figma Wireframing to Web'],
     tags: ['ReactJS', 'Node.js', 'HTML/CSS', 'PostgreSQL', 'Figma', 'JavaScript'],
     accentColor: '#00f0ff',
-    demoUrl: 'https://github.com/sandarusanleen',
-    repoUrl: 'https://github.com/sandarusanleen',
+    demoUrl: 'https://github.com/sandarusanleen/ARTISYNC_website',
+    repoUrl: 'https://github.com/sandarusanleen/ARTISYNC_website',
     previewImage: 'linear-gradient(135deg, #091b2e 0%, #002b4d 50%, #00f0ff 100%)',
-    tracks: ['web', 'swe', 'uiux']
+    tracks: ['web', 'swe', 'uiux', 'data']
   },
   {
     id: 'carevision-lk',
@@ -133,10 +136,10 @@ export const PROJECTS_DATA = [
     metrics: ['Deep Learning Edge Architecture', 'Real-Time Multi-Zone Surveillance', 'Low-Latency Video Stream Analysis'],
     tags: ['Python', 'Deep Learning', 'Edge Computing', 'System Architecture', 'MySQL/PostgreSQL'],
     accentColor: '#8b5cf6',
-    demoUrl: 'https://github.com/sandarusanleen',
-    repoUrl: 'https://github.com/sandarusanleen',
+    demoUrl: 'https://github.com/NadunML/Frontend_CareVision_LK',
+    repoUrl: 'https://github.com/NadunML/Frontend_CareVision_LK',
     previewImage: 'linear-gradient(135deg, #1b0f2e 0%, #341256 50%, #8b5cf6 100%)',
-    tracks: ['swe', 'data']
+    tracks: ['swe', 'data', 'web', 'uiux']
   },
   {
     id: 'wonder-routes',
@@ -150,10 +153,10 @@ export const PROJECTS_DATA = [
     metrics: ['Custom Itinerary Planning', 'Interactive Destination UI', 'Fast Responsive Web Experience'],
     tags: ['ReactJS', 'Next.js', 'JavaScript', 'HTML/CSS', 'Figma', 'UI/UX'],
     accentColor: '#10b981',
-    demoUrl: 'https://github.com/sandarusanleen',
-    repoUrl: 'https://github.com/sandarusanleen',
+    demoUrl: 'https://github.com/sandarusanleen/wonder_routes_website',
+    repoUrl: 'https://github.com/sandarusanleen/wonder_routes_website',
     previewImage: 'linear-gradient(135deg, #09261c 0%, #0c4230 50%, #10b981 100%)',
-    tracks: ['web', 'uiux']
+    tracks: ['web', 'uiux', 'swe', 'data']
   },
   {
     id: 'ecos-of-reality',
@@ -167,10 +170,11 @@ export const PROJECTS_DATA = [
     metrics: ['Complete UI/UX Design System', 'AR Scan & 3D Spatial Models', 'Futuristic AI Tutor Interface'],
     tags: ['Figma', 'Photoshop', 'UI/UX Design', 'AR Concept', 'Wireframing', 'Design Systems'],
     accentColor: '#ec4899',
-    demoUrl: 'https://github.com/sandarusanleen',
-    repoUrl: 'https://github.com/sandarusanleen',
+    demoUrl: 'https://www.figma.com/design/YJMiDJMAnfwymvYC3KLYTK/Ecos-Of-Reality?m=dev',
+    repoUrl: 'https://www.figma.com/design/YJMiDJMAnfwymvYC3KLYTK/Ecos-Of-Reality?m=dev',
+    figmaUrl: 'https://www.figma.com/design/YJMiDJMAnfwymvYC3KLYTK/Ecos-Of-Reality?m=dev',
     previewImage: 'linear-gradient(135deg, #2e091d 0%, #520f32 50%, #ec4899 100%)',
-    tracks: ['uiux', 'web']
+    tracks: ['uiux', 'web', 'swe', 'data']
   }
 ];
 
@@ -246,7 +250,7 @@ ${HERO_DATA.name.toUpperCase()}
 ${track.roleName}
 Email: ${HERO_DATA.email} | Phone: ${HERO_DATA.phone}
 Location: ${HERO_DATA.address}
-Links: LinkedIn | Portfolio
+Links: LinkedIn (${HERO_DATA.linkedinUrl}) | Portfolio (${HERO_DATA.portfolioUrl})
 ================================================================================
 
 SUMMARY
@@ -285,6 +289,7 @@ ${sortedProjects.map((p, idx) => `${p.title}
 ${p.subtitle}
 ${p.summary}
 ${p.year}
+Link: ${p.figmaUrl || p.repoUrl}
 `).join("\n")}
 ================================================================================`;
 }

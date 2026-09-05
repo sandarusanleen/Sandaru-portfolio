@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { ExternalLink, Github, Eye, Sparkles } from 'lucide-react';
+import { ExternalLink, Github, Eye, Sparkles, Palette } from 'lucide-react';
 import { playClick } from '../utils/audio';
 
 export default function ProjectCard({ project, onSelect }) {
@@ -142,13 +142,14 @@ export default function ProjectCard({ project, onSelect }) {
 
             <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
               <a
-                href={project.repoUrl}
+                href={project.figmaUrl || project.repoUrl}
                 target="_blank"
                 rel="noreferrer"
-                aria-label={`View ${project.title} on GitHub`}
+                title={project.figmaUrl ? "Open Figma Design Specimen" : `View ${project.title} on GitHub`}
+                aria-label={project.figmaUrl ? "Open Figma Design Specimen" : `View ${project.title} on GitHub`}
                 className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
               >
-                <Github className="w-3.5 h-3.5" />
+                {project.figmaUrl ? <Palette className="w-3.5 h-3.5 text-neon-pink" /> : <Github className="w-3.5 h-3.5" />}
               </a>
               <a
                 href={project.demoUrl}

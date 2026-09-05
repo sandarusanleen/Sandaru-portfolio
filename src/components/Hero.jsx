@@ -1,6 +1,6 @@
 import React from 'react';
 import HolographicProfile from './HolographicProfile';
-import { HERO_DATA, CV_TRACKS } from '../data/portfolioData';
+import { HERO_DATA, CV_TRACKS, EDUCATION_DATA } from '../data/portfolioData';
 import { useGravity } from '../context/GravityContext';
 import { useTrack } from '../context/TrackContext';
 import { playClick } from '../utils/audio';

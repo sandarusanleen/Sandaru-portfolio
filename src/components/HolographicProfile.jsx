@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import profileImg from '../assets/profile.jpg';
 import { HERO_DATA, EDUCATION_DATA } from '../data/portfolioData';
 import { useGravity } from '../context/GravityContext';
 import { useTrack } from '../context/TrackContext';
@@ -190,7 +191,7 @@ export default function HolographicProfile() {
           <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-white/20 shadow-2xl bg-space-950 p-1 group-hover:border-neon-cyan/60 transition-colors">
             {imageLoaded ? (
               <img
-                src="/profile.jpg"
+                src={profileImg}
                 alt="Sandaru Sanleen Bandarigodage"
                 onError={() => setImageLoaded(false)}
                 className="w-full h-full object-cover object-top rounded-full transition-transform duration-500 group-hover:scale-105"
