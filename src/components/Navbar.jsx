@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { useGravity } from '../context/GravityContext';
 import { useTrack } from '../context/TrackContext';
 import { playClick } from '../utils/audio';
 import { HERO_DATA } from '../data/portfolioData';
 import { Orbit, Menu, X, Send } from 'lucide-react';
 
 export default function Navbar() {
-  const { currentModeConfig } = useGravity();
   const { currentTrack, activeTrack } = useTrack();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -115,7 +113,7 @@ export default function Navbar() {
             <span style={{ color: currentTrack.color || '#10b981' }}>
               TRACK: {currentTrack.shortLabel || 'ALL TRACKS'}
             </span>
-            <span>{currentModeConfig.label}</span>
+            <span className="text-emerald-400 font-semibold">AVAILABLE</span>
           </div>
         </div>
       )}
