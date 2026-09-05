@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { useGravity } from '../context/GravityContext';
+import { useTrack } from '../context/TrackContext';
 import { playClick } from '../utils/audio';
 import { HERO_DATA } from '../data/portfolioData';
-import { Orbit, Menu, X, Radio, FileText, Send } from 'lucide-react';
+import { Orbit, Menu, X, Send } from 'lucide-react';
 
 export default function Navbar() {
   const { currentModeConfig } = useGravity();
+  const { currentTrack, activeTrack } = useTrack();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
     { label: 'About & Profile', href: '#about' },
-    { label: 'Projects & UI/UX', href: '#projects' },
+    { label: 'Projects & Works', href: '#projects' },
     { label: 'Experience & Skills', href: '#skills' },
-    { label: 'Connect / Hire', href: '#contact' },
+    { label: 'CV Downloads & Hire', href: '#contact' },
   ];
 
   const handleLinkClick = () => {
@@ -40,7 +42,7 @@ export default function Navbar() {
               {HERO_DATA.displayName}
             </span>
             <span className="text-[9px] text-slate-400 tracking-tighter">
-              SWE // UI/UX DESIGN
+              {activeTrack === 'all' ? 'SWE • WEB • UI/UX • DATA' : currentTrack.shortLabel?.toUpperCase()}
             </span>
           </div>
         </a>
@@ -63,8 +65,16 @@ export default function Navbar() {
         {/* Status / Telemetry Badge & Action */}
         <div className="hidden sm:flex items-center gap-3">
           <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-space-950/60 border border-white/10 text-[11px] font-mono">
-            <span className="w-2 h-2 rounded-full bg-neon-emerald animate-pulse" />
-            <span className="text-neon-emerald font-semibold">INTERN APPLICANT</span>
+            <span 
+              className="w-2 h-2 rounded-full animate-pulse"
+              style={{ backgroundColor: currentTrack.color || '#10b981' }}
+            />
+            <span 
+              className="font-semibold"
+              style={{ color: currentTrack.color || '#10b981' }}
+            >
+              {currentTrack.shortLabel || 'FULL SPECTRUM'}
+            </span>
           </div>
 
           <a
@@ -102,8 +112,10 @@ export default function Navbar() {
             </a>
           ))}
           <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
-            <span className="text-neon-emerald font-semibold">STATUS: SEEKING INTERNSHIP</span>
-            <span style={{ color: currentModeConfig.color }}>{currentModeConfig.label}</span>
+            <span style={{ color: currentTrack.color || '#10b981' }}>
+              TRACK: {currentTrack.shortLabel || 'ALL TRACKS'}
+            </span>
+            <span>{currentModeConfig.label}</span>
           </div>
         </div>
       )}

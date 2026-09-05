@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { HERO_DATA, EDUCATION_DATA } from '../data/portfolioData';
 import { useGravity } from '../context/GravityContext';
+import { useTrack } from '../context/TrackContext';
 import { playClick, playPulse } from '../utils/audio';
 import { 
   Palette, 
@@ -14,7 +15,11 @@ import {
   Sparkles, 
   Download,
   Building,
-  Briefcase
+  Briefcase,
+  Database,
+  BarChart3,
+  Cpu,
+  Globe
 } from 'lucide-react';
 
 export default function HolographicProfile() {
@@ -25,7 +30,8 @@ export default function HolographicProfile() {
   const [copied, setCopied] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(true);
 
-  const { gravityVector, gravityMode } = useGravity();
+  const { gravityVector } = useGravity();
+  const { activeTrack, currentTrack } = useTrack();
 
   const handleMouseMove = (e) => {
     if (!cardRef.current) return;
@@ -57,41 +63,48 @@ export default function HolographicProfile() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Orbital satellites with microgravity drift influence
-  const satellites = [
-    {
-      id: 'uiux',
-      label: 'Figma & UI/UX',
-      icon: <Palette className="w-3.5 h-3.5 text-neon-pink" />,
-      color: '#ec4899',
-      position: 'top-2 -left-4 sm:-left-6',
-      anim: 'animate-float-slow',
-    },
-    {
-      id: 'react',
-      label: 'React & Next.js',
-      icon: <Code2 className="w-3.5 h-3.5 text-neon-cyan" />,
-      color: '#00f0ff',
-      position: 'top-10 -right-4 sm:-right-6',
-      anim: 'animate-float-medium',
-    },
-    {
-      id: 'susl',
-      label: 'SUSL Computing',
-      icon: <GraduationCap className="w-3.5 h-3.5 text-neon-violet" />,
-      color: '#8b5cf6',
-      position: 'bottom-20 -left-4 sm:-left-6',
-      anim: 'animate-float-fast',
-    },
-    {
-      id: 'boc',
-      label: 'Ex-BOC Assistant',
-      icon: <Building className="w-3.5 h-3.5 text-neon-amber" />,
-      color: '#f59e0b',
-      position: 'bottom-6 -right-3 sm:-right-5',
-      anim: 'animate-float-slow',
-    },
-  ];
+  // Dynamically tailor orbital satellite badges to match the active CV track
+  const getSatellitesForTrack = () => {
+    switch (activeTrack) {
+      case 'uiux':
+        return [
+          { id: 'figma', label: 'Figma Prototyping', icon: <Palette className="w-3.5 h-3.5 text-neon-pink" />, color: '#ec4899', position: 'top-2 -left-4 sm:-left-6', anim: 'animate-float-slow' },
+          { id: 'ds', label: 'Design Systems', icon: <Sparkles className="w-3.5 h-3.5 text-neon-cyan" />, color: '#00f0ff', position: 'top-10 -right-4 sm:-right-6', anim: 'animate-float-medium' },
+          { id: 'ar', label: 'AR Learning Concept', icon: <Cpu className="w-3.5 h-3.5 text-neon-violet" />, color: '#8b5cf6', position: 'bottom-20 -left-4 sm:-left-6', anim: 'animate-float-fast' },
+          { id: 'ps', label: 'Photoshop Assets', icon: <Palette className="w-3.5 h-3.5 text-neon-amber" />, color: '#f59e0b', position: 'bottom-6 -right-3 sm:-right-5', anim: 'animate-float-slow' },
+        ];
+      case 'swe':
+        return [
+          { id: 'sys', label: 'System Architecture', icon: <Cpu className="w-3.5 h-3.5 text-neon-cyan" />, color: '#00f0ff', position: 'top-2 -left-4 sm:-left-6', anim: 'animate-float-slow' },
+          { id: 'langs', label: 'Java • Python • C', icon: <Code2 className="w-3.5 h-3.5 text-neon-emerald" />, color: '#10b981', position: 'top-10 -right-4 sm:-right-6', anim: 'animate-float-medium' },
+          { id: 'db', label: 'PostgreSQL / MySQL', icon: <Database className="w-3.5 h-3.5 text-neon-violet" />, color: '#8b5cf6', position: 'bottom-20 -left-4 sm:-left-6', anim: 'animate-float-fast' },
+          { id: 'edge', label: 'Edge Deep Learning', icon: <Sparkles className="w-3.5 h-3.5 text-neon-pink" />, color: '#ec4899', position: 'bottom-6 -right-3 sm:-right-5', anim: 'animate-float-slow' },
+        ];
+      case 'web':
+        return [
+          { id: 'react', label: 'ReactJS & Next.js', icon: <Globe className="w-3.5 h-3.5 text-neon-cyan" />, color: '#00f0ff', position: 'top-2 -left-4 sm:-left-6', anim: 'animate-float-slow' },
+          { id: 'node', label: 'Node.js & Express', icon: <Code2 className="w-3.5 h-3.5 text-neon-emerald" />, color: '#10b981', position: 'top-10 -right-4 sm:-right-6', anim: 'animate-float-medium' },
+          { id: 'tail', label: 'Tailwind & HTML/CSS', icon: <Sparkles className="w-3.5 h-3.5 text-neon-pink" />, color: '#ec4899', position: 'bottom-20 -left-4 sm:-left-6', anim: 'animate-float-fast' },
+          { id: 'artisync', label: 'Marketplace Engine', icon: <Cpu className="w-3.5 h-3.5 text-neon-amber" />, color: '#f59e0b', position: 'bottom-6 -right-3 sm:-right-5', anim: 'animate-float-slow' },
+        ];
+      case 'data':
+        return [
+          { id: 'pydata', label: 'Python Data Analysis', icon: <BarChart3 className="w-3.5 h-3.5 text-amber-400" />, color: '#f59e0b', position: 'top-2 -left-4 sm:-left-6', anim: 'animate-float-slow' },
+          { id: 'sql', label: 'SQL Query Analytics', icon: <Database className="w-3.5 h-3.5 text-neon-cyan" />, color: '#00f0ff', position: 'top-10 -right-4 sm:-right-6', anim: 'animate-float-medium' },
+          { id: 'surv', label: 'Surveillance Analytics', icon: <Cpu className="w-3.5 h-3.5 text-neon-violet" />, color: '#8b5cf6', position: 'bottom-20 -left-4 sm:-left-6', anim: 'animate-float-fast' },
+          { id: 'schemas', label: 'Relational Schemas', icon: <Sparkles className="w-3.5 h-3.5 text-neon-emerald" />, color: '#10b981', position: 'bottom-6 -right-3 sm:-right-5', anim: 'animate-float-slow' },
+        ];
+      default:
+        return [
+          { id: 'uiux', label: 'Figma & UI/UX', icon: <Palette className="w-3.5 h-3.5 text-neon-pink" />, color: '#ec4899', position: 'top-2 -left-4 sm:-left-6', anim: 'animate-float-slow' },
+          { id: 'react', label: 'React & Next.js', icon: <Code2 className="w-3.5 h-3.5 text-neon-cyan" />, color: '#00f0ff', position: 'top-10 -right-4 sm:-right-6', anim: 'animate-float-medium' },
+          { id: 'susl', label: 'SUSL Computing', icon: <GraduationCap className="w-3.5 h-3.5 text-neon-violet" />, color: '#8b5cf6', position: 'bottom-20 -left-4 sm:-left-6', anim: 'animate-float-fast' },
+          { id: 'boc', label: 'Ex-BOC Assistant', icon: <Building className="w-3.5 h-3.5 text-neon-amber" />, color: '#f59e0b', position: 'bottom-6 -right-3 sm:-right-5', anim: 'animate-float-slow' },
+        ];
+    }
+  };
+
+  const activeSatellites = getSatellitesForTrack();
 
   return (
     <div
@@ -123,8 +136,8 @@ export default function HolographicProfile() {
           />
         )}
 
-        {/* Floating Satellites drifting around the card */}
-        {satellites.map((sat) => (
+        {/* Floating Satellites dynamically reflecting the active track */}
+        {activeSatellites.map((sat) => (
           <div
             key={sat.id}
             className={`absolute ${sat.position} ${sat.anim} z-30 hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full glass-panel border shadow-lg backdrop-blur-md text-[11px] font-mono`}
@@ -154,8 +167,10 @@ export default function HolographicProfile() {
               Available for Internships
             </span>
           </div>
-          <div className="text-[11px] text-slate-400">
-            <span>SUSL // 2024–PRES</span>
+          <div className="text-[11px] font-semibold tracking-wider text-slate-300">
+            <span style={{ color: currentTrack.color || '#00f0ff' }}>
+              [{currentTrack.shortLabel || 'FULL-SPECTRUM'}]
+            </span>
           </div>
         </div>
 
@@ -167,7 +182,7 @@ export default function HolographicProfile() {
           {/* Outer Pulsing Glow */}
           <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-neon-cyan/20 via-neon-pink/20 to-neon-violet/20 blur-2xl animate-pulse-glow" />
 
-          {/* Counter-rotating decorative orbital ring */}
+          {/* Counter-rotating decorative orbital rings */}
           <div className="absolute -inset-3 rounded-full border border-dashed border-neon-cyan/30 animate-[spin_25s_linear_infinite]" />
           <div className="absolute -inset-1.5 rounded-full border border-neon-pink/30 animate-[spin_18s_linear_infinite_reverse]" />
 
@@ -191,17 +206,20 @@ export default function HolographicProfile() {
           </div>
         </div>
 
-        {/* Profile Details & Bio Block */}
+        {/* Profile Details & Dynamic Track Title */}
         <div style={{ transform: 'translateZ(30px)' }} className="text-center mb-6">
           <h2 className="text-xl sm:text-2xl font-extrabold text-white font-display tracking-tight">
             {HERO_DATA.displayName}
           </h2>
-          <p className="text-xs sm:text-sm font-semibold text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan via-purple-300 to-pink-400 font-display mt-0.5 mb-2">
-            {HERO_DATA.title}
+          <p 
+            className="text-xs sm:text-sm font-bold font-display mt-0.5 mb-2"
+            style={{ color: currentTrack.color || '#00f0ff' }}
+          >
+            {currentTrack.roleName || HERO_DATA.defaultTitle}
           </p>
 
           <p className="text-xs text-slate-300 font-sans leading-relaxed max-w-sm mx-auto">
-            Bridging full-stack software development, surveillance architecture, and user-centered UI/UX prototypes.
+            {currentTrack.tagline || HERO_DATA.tagline}
           </p>
         </div>
 
@@ -217,17 +235,17 @@ export default function HolographicProfile() {
 
           <div className="p-2.5 rounded-xl bg-space-950/60 border border-white/5 flex items-center gap-2">
             <GraduationCap className="w-3.5 h-3.5 text-neon-cyan flex-shrink-0" />
-            <span className="text-slate-300 truncate">BSc. CIS Undergrad</span>
+            <span className="text-slate-300 truncate">BSc. (Hons) CIS</span>
           </div>
 
           <div className="p-2.5 rounded-xl bg-space-950/60 border border-white/5 flex items-center gap-2">
             <Palette className="w-3.5 h-3.5 text-neon-emerald flex-shrink-0" />
-            <span className="text-slate-300 truncate">Figma & Prototyping</span>
+            <span className="text-slate-300 truncate">Figma & Photoshop</span>
           </div>
 
           <div className="p-2.5 rounded-xl bg-space-950/60 border border-white/5 flex items-center gap-2">
-            <Briefcase className="w-3.5 h-3.5 text-neon-amber flex-shrink-0" />
-            <span className="text-slate-300 truncate">Banking Operations</span>
+            <Building className="w-3.5 h-3.5 text-neon-amber flex-shrink-0" />
+            <span className="text-slate-300 truncate">Ex-Bank of Ceylon</span>
           </div>
         </div>
 

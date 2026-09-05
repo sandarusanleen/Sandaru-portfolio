@@ -1,27 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProjectCard from './ProjectCard';
 import ProjectModal from './ProjectModal';
-import { PROJECTS_DATA } from '../data/portfolioData';
-import { Sparkles, Terminal, Palette, Code, Cpu } from 'lucide-react';
+import { PROJECTS_DATA, CV_TRACKS } from '../data/portfolioData';
+import { useTrack } from '../context/TrackContext';
+import { Terminal, Sparkles, Filter } from 'lucide-react';
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [activeFilter, setActiveFilter] = useState('all');
+  const { activeTrack } = useTrack();
+
+  // Synchronize filter when hero track switcher changes
+  useEffect(() => {
+    if (activeTrack !== 'all') {
+      setActiveFilter(activeTrack);
+    }
+  }, [activeTrack]);
 
   const categories = [
     { id: 'all', label: 'All Projects' },
+    { id: 'swe', label: 'Software Engineering' },
+    { id: 'web', label: 'Web Development' },
     { id: 'uiux', label: 'UI/UX & AR Concepts' },
-    { id: 'web', label: 'Full-Stack & Web' },
-    { id: 'ai', label: 'AI & Edge Systems' },
+    { id: 'data', label: 'Data Analytics & AI' },
   ];
 
-  const filteredProjects = PROJECTS_DATA.filter((p) => {
-    if (activeFilter === 'all') return true;
-    if (activeFilter === 'uiux') return p.category.toLowerCase().includes('ui/ux') || p.tags.includes('UI/UX Design') || p.tags.includes('Figma');
-    if (activeFilter === 'web') return p.category.toLowerCase().includes('web') || p.category.toLowerCase().includes('full-stack') || p.category.toLowerCase().includes('frontend');
-    if (activeFilter === 'ai') return p.category.toLowerCase().includes('ai') || p.tags.includes('Python') || p.tags.includes('Deep Learning');
-    return true;
-  });
+  // Sort and filter projects based on active filter
+  const getFilteredProjects = () => {
+    let list = [...PROJECTS_DATA];
+
+    if (activeFilter === 'uiux') {
+      // Prioritize ECOS OF REALITY as in the UI/UX CV
+      list.sort((a, b) => (a.id === 'ecos-of-reality' ? -1 : 1));
+      return list.filter(p => p.tracks.includes('uiux'));
+    }
+
+    if (activeFilter === 'swe') {
+      // Prioritize CareVision LK & Artisync
+      list.sort((a, b) => (a.id === 'carevision-lk' ? -1 : 1));
+      return list.filter(p => p.tracks.includes('swe'));
+    }
+
+    if (activeFilter === 'web') {
+      // Prioritize Artisync & Wonder Routes
+      list.sort((a, b) => (a.id === 'artisync' ? -1 : 1));
+      return list.filter(p => p.tracks.includes('web'));
+    }
+
+    if (activeFilter === 'data') {
+      // Prioritize CareVision LK (edge data analytics)
+      list.sort((a, b) => (a.id === 'carevision-lk' ? -1 : 1));
+      return list.filter(p => p.tracks.includes('data'));
+    }
+
+    return list;
+  };
+
+  const filteredProjects = getFilteredProjects();
 
   return (
     <section id="projects" className="relative py-20 px-4 max-w-6xl mx-auto w-full">
@@ -30,13 +65,13 @@ export default function Projects() {
         <div>
           <div className="inline-flex items-center gap-2 text-xs font-mono text-neon-cyan mb-2.5">
             <Terminal className="w-3.5 h-3.5" />
-            <span className="tracking-widest uppercase">MODULE 02 // REAL-WORLD PROJECTS & CONCEPTS</span>
+            <span className="tracking-widest uppercase">MODULE 02 // REAL PROJECTS ACROSS 4 TRACKS</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-display">
-            Engineered Systems & UI/UX Portfolios
+            Portfolio Projects & Interactive Works
           </h2>
           <p className="text-slate-400 text-sm sm:text-base mt-2 max-w-xl">
-            From enterprise-grade hospital surveillance to futuristic AR educational experiences and artisan discovery platforms.
+            Real implementations from hospital surveillance & AI edge computing to modern React marketplaces and futuristic AR concepts.
           </p>
         </div>
 
